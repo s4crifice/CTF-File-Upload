@@ -14,16 +14,14 @@ import os
 
 app = Flask(__name__)
 
-# Generowanie losowego klucza CSRF podczas uruchamiania aplikacji
+# Generate a random CSRF key during application startup
 app.config['SECRET_KEY'] = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32))
 
 csrf = CSRFProtect(app)
 
-
 class FileUploadForm(FlaskForm):
     file1 = FileField("File 1", validators=[FileRequired()])
     file2 = FileField("File 2", validators=[FileRequired()])
-
 
 def get_file_hash(file_path):
     hash_object = hashlib.md5()
@@ -34,7 +32,6 @@ def get_file_hash(file_path):
 
     return hash_object.hexdigest()
 
-
 def gen_random_name():
     random_string = "".join(
         random.SystemRandom().choice(
@@ -43,7 +40,6 @@ def gen_random_name():
         for _ in range(25)
     )
     return random_string
-
 
 def compare_files(file1, file2):
     line_number1 = 0
@@ -70,7 +66,6 @@ def compare_files(file1, file2):
 
     return not_equal, how_many_lines
 
-
 @app.route("/", methods=["GET", "POST"])
 def index():
     form = FileUploadForm()
@@ -79,7 +74,7 @@ def index():
         file1 = form.file1.data
         file2 = form.file2.data
 
-        # Ograniczenie rozmiaru pliku
+        # Limit file size
         max_file_size = 5 * 1024 * 1024  # 5 MB
         if file1.content_length > max_file_size or file2.content_length > max_file_size:
             flash("Error: File size exceeds the limit.")
@@ -154,14 +149,12 @@ def download_file(filename):
 def page_not_found(e):
     return render_template("error.html", message="Error 404: Page not found."), 404
 
-
 @app.errorhandler(500)
 def internal_server_error(e):
     return (
         render_template("error.html", message="Error 500: Internal server error."),
         500,
     )
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
