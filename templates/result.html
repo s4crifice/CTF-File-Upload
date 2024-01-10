@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison Result</title>
+    <style>
+        body {
+            background-color: #068D9D;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #53599A;
+            text-align: center;
+        }
+        
+        .upload-form {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .upload-form input[type="file"] {
+            display: none;
+        }
+        
+        .upload-form label {
+            background-color: #6D9DC5;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .upload-form label:hover {
+            background-color: #80DED9;
+        }
+        
+        .upload-form input[type="submit"] {
+            background-color: #AEECEF;
+            color: #53599A;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .upload-form input[type="submit"]:hover {
+            background-color: #80DED9;
+        }
+        
+        .message-box {
+            background-color: #fff;
+            color: #53599A;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Comparison Result</h1>
+        <div class="message-box">
+            {% if not_equal %}
+                <p>Files differ. Different lines:</p>
+                {% for line in not_equal %}
+                    <p>{{ line }}</p>
+                {% endfor %}
+            {% else %}
+                <p>Files are identical.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>
