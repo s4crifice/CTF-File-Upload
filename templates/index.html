@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Compare Website</title>
+    <style>
+        body {
+            background-color: #068D9D;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #53599A;
+            text-align: center;
+        }
+        
+        .upload-form {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .upload-form input[type="file"] {
+            display: none;
+        }
+        
+        .upload-form label {
+            background-color: #6D9DC5;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .upload-form label:hover {
+            background-color: #80DED9;
+        }
+        
+        .upload-form input[type="submit"] {
+            background-color: #AEECEF;
+            color: #53599A;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .upload-form input[type="submit"]:hover {
+            background-color: #80DED9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><a href="http://" style="text-decoration: none; color: #53599A">File Compare Website</a></h1>
+        
+        <div class="upload-form">
+            <form method="post" enctype="multipart/form-data">
+                {{ form.csrf_token }}
+                <input type="file" name="file1" id="file1" onchange="displayFileName('file1', 'file1-name')">
+                <label for="file1">Choose File 1</label>
+
+                <input type="file" name="file2" id="file2" onchange="displayFileName('file2', 'file2-name')">
+                <label for="file2">Choose File 2</label>
+
+                <span id="file1-name"></span>
+                <span id="file2-name"></span>
+
+                <input type="submit" value="Upload" onclick="return validateFiles()">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function validateFiles() {
+            const input1 = document.getElementById('file1');
+            const input2 = document.getElementById('file2');
+
+            if (input1.files.length === 0 || input2.files.length === 0) {
+                alert('Please choose both files.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function displayFileName(inputId, displayId) {
+            const input = document.getElementById(inputId);
+            const display = document.getElementById(displayId);
+
+            const fileName = input.files[0].name;
+            console.log('File selected:', fileName);
+            display.textContent = fileName;
+        }
+    </script>
+</body>
+</html>
