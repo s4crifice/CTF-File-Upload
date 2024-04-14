@@ -14,7 +14,6 @@ import subprocess as sp
 
 app = Flask(__name__)
 
-# Generate a random CSRF key during application startup
 app.config['SECRET_KEY'] = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32))
 
 csrf = CSRFProtect(app)
@@ -31,15 +30,6 @@ def get_file_hash(file_path):
             hash_object.update(chunk)
 
     return hash_object.hexdigest()
-
-def gen_random_name():
-    random_string = "".join(
-        random.SystemRandom().choice(
-            string.ascii_lowercase + string.ascii_uppercase + string.digits
-        )
-        for _ in range(25)
-    )
-    return random_string
 
 def compare_files(file1, file2):
     line_number1 = 0
@@ -74,8 +64,7 @@ def index():
         file1 = form.file1.data
         file2 = form.file2.data
 
-        # Limit file size
-        max_file_size = 5 * 1024 * 1024  # 5 MB
+        max_file_size = 5 * 1024 * 1024
         if file1.content_length > max_file_size or file2.content_length > max_file_size:
             flash("Error: File size exceeds the limit.")
             return render_template(
