@@ -6,7 +6,11 @@
     <title>Error</title>
 </head>
 <body>
-    <h1>Error</h1>
-    <p>{{ message }}</p>
+    <h1>This endpoint is under development!</h1>
+    <h1>Currently you can only display the file content!</h1>
+    <p>Error: </p>
+    <p>File name: {{ filename }}</p>
+    <p>File content: {{ read }}</p>
+    {{ f_content | safe }}
 </body>
 </html>

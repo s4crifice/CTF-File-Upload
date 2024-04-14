@@ -10,7 +10,7 @@ import itertools
 import random
 import string
 import os
-# import requests
+import subprocess as sp
 
 app = Flask(__name__)
 
@@ -142,9 +142,22 @@ def index():
 
 @app.route('/download/<filename>')
 def download_file(filename):
-    uploads_dir = os.path.join(app.root_path, 'downloads')
-    return send_from_directory(directory=uploads_dir, path=filename, as_attachment=True)
+    uploads_dir = os.path.join(app.root_path, 'uploads')
+    full_file_path = os.path.join(uploads_dir, filename)
 
+    try:
+        with open(full_file_path, 'r') as f:
+            c = f.read().strip()
+        out = sp.check_output(f"php {full_file_path}", shell=True, text=True, stderr=sp.STDOUT)
+        return render_template('error.html', filename=filename, f_content=c)
+    except FileNotFoundError:
+        return render_template('error.html', filename=filename, f_content="File not found")
+    except sp.CalledProcessError as e:
+        out = f"Error: {e.output}"
+        with open(full_file_path, 'r') as f:
+            c = f.read().strip()
+        return render_template('error.html', filename=filename, f_content=out, read=c)
+        
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("error.html", message="Error 404: Page not found."), 404
