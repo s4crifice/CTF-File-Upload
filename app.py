@@ -90,10 +90,10 @@ def index():
         filename2 = secure_filename(file2.filename)
 
         path1 = os.path.join(
-            "uploads", gen_random_name() + os.path.splitext(filename1)[1] + ".comp"
+            "uploads", filename1
         )
         path2 = os.path.join(
-            "uploads", gen_random_name() + os.path.splitext(filename2)[1] + ".comp"
+            "uploads", filename2
         )
 
         file1.save(path1)
