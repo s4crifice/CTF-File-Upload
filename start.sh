@@ -3,6 +3,8 @@
 ## sometimes it's getting stuck on downloading packages
 ## in this case just CTRL + C and try again
 
+mkdir uploads
+
 docker build -t application .
 
 docker run --privileged -p 5000:5000 -d application
