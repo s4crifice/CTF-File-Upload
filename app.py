@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+## Autor: vex0r - Wiktor Nowakowski
+## End date: April 15th, 2024
+
 from flask import Flask, render_template, request, flash, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_wtf.csrf import CSRFProtect
